@@ -1,11 +1,11 @@
-import express from 'express';
+import express from "express";
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.get('/', (_, res) => {
+app.get("/", (_, res) => {
   res.status(200).json({
-    message: "good day"
+    message: "good day",
   });
 });
 
