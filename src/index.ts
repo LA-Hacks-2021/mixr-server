@@ -1,12 +1,13 @@
 import express from "express";
 import Twilio from "twilio";
+import cors from "cors";
 
 import {
   PORT,
   TWILIO_ACCOUNT_SID,
   TWILIO_API_KEY,
   TWILIO_API_SECRET,
-} from "./config.js";
+} from "./config";
 
 const app = express();
 const AccessToken = Twilio.jwt.AccessToken;
@@ -14,6 +15,7 @@ const ChatGrant = AccessToken.ChatGrant;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 /**
  * Token generation request

@@ -7,8 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "tsc & node .",
-    "dev": "tsc -w & nodemon ."
+    "start": "tsc & node --es-module-specifier-resolution=node .",
+    "dev": "tsc -w & nodemon --es-module-specifier-resolution=node ."
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,13 @@
   },
   "homepage": "https://github.com/LA-Hacks-2021/mixr-server#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "twilio": "^3.58.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
     "@types/node": "^14.14.35",
     "@types/twilio": "^2.11.0",
