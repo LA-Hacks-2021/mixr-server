@@ -10,12 +10,16 @@ Mixr app backend server.
 
 ## API Endpoints
 
+> API endpoints require an Auth0 token (received from Auth0 after login) to be included in the headers of the request under `authorization`. The Auth0 token should have the appropriate Auth0 scopes for the relevant endpoints. For more details, refer to <https://auth0.com/docs/scopes>.
+
 ### Get Twilio token
 
 - Method: GET
 - URL: `/token/:identity`
 - Params:
   - Identity: unique identifier for user (linkedin email in this case)
+- Auth0 Scopes:
+  - `"get:token"`
 
 ## env file
 
