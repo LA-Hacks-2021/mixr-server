@@ -8,19 +8,20 @@ import {
   TWILIO_API_KEY,
   TWILIO_API_SECRET,
 } from "./config";
+import { checkJwt, checkScopes } from "./auth";
 
 const app = express();
-const AccessToken = Twilio.jwt.AccessToken;
-const ChatGrant = AccessToken.ChatGrant;
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
+const AccessToken = Twilio.jwt.AccessToken;
+const ChatGrant = AccessToken.ChatGrant;
+
 /**
  * Token generation request
  */
-app.get("/token/:identity", (req, res) => {
+app.get("/token/:identity", checkJwt, checkScopes("get:token"), (req, res) => {
   const identity = req.params.identity;
   const token = new AccessToken(
     TWILIO_ACCOUNT_SID,
