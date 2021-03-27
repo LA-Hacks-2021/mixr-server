@@ -2,11 +2,14 @@ import express from "express";
 import Twilio from "twilio";
 import cors from "cors";
 
+import { LinkedInProfileScraper } from 'linkedin-profile-scraper';
+
 import {
   PORT,
   TWILIO_ACCOUNT_SID,
   TWILIO_API_KEY,
   TWILIO_API_SECRET,
+  LI_AT_SESSION_COOKIE
 } from "./config";
 
 const app = express();
@@ -39,6 +42,25 @@ app.get("/token/:identity", (req, res) => {
     identity: token.identity,
     jwt: token.toJwt(),
   });
+});
+
+app.get("/li/:username", async (req, res) => {
+  const scraper = new LinkedInProfileScraper({
+    sessionCookieValue: LI_AT_SESSION_COOKIE,
+    keepAlive: false
+  });
+
+  // Prepare the scraper
+  // Loading it in memory
+  await scraper.setup()
+
+  const result = await scraper.run(`https://www.linkedin.com/in/${req.params.username}/`)
+
+  if (result.userProfile.fullName === null) {
+    res.status(404).send({"error": "user not found"});
+  } else {
+    res.send(result);
+  }
 });
 
 const port = PORT || 5000;
