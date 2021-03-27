@@ -3,6 +3,7 @@ import Twilio from "twilio";
 import cors from "cors";
 
 import { LinkedInProfileScraper } from 'linkedin-profile-scraper';
+import {Firestore} from "@google-cloud/firestore"
 
 import {
   PORT,
@@ -15,6 +16,9 @@ import {
 const app = express();
 const AccessToken = Twilio.jwt.AccessToken;
 const ChatGrant = AccessToken.ChatGrant;
+
+const firestore = new Firestore();
+const profiles = firestore.collection("profiles");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -59,6 +63,7 @@ app.get("/li/:username", async (req, res) => {
   if (result.userProfile.fullName === null) {
     res.status(404).send({"error": "user not found"});
   } else {
+    profiles.doc(req.params.username).set(result);
     res.send(result);
   }
 });
