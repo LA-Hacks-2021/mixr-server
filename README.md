@@ -8,6 +8,10 @@ Mixr app backend server.
 2. Run `npm install` in root directory
 3. For development, run `npm run dev`. This enable hot-reloading on code changes. For production, run `npm start`
 
+### What's working right now:
+
+Run `npm start`, then run `lt --subdomain mixr-server --port 5000`. Make sure you have added the `LI_IN_SESSION_COOKIE` in the `.env` file. Hot-reloading will not work. Then, log in and don't include `https:/linkedin.com/in`. Only include what comes after.
+
 ## API Endpoints
 
 ### Get Twilio token
@@ -19,7 +23,7 @@ Mixr app backend server.
 
 ### Get Linkedin Profile
 
-This scrapes user's LI profile, adds it to the firestore database, and then returns it.  
+This scrapes user's LI profile, adds it to the firestore database, and then returns it.
 
 - Method: GET
 - URL: `/li/:username`
@@ -29,13 +33,11 @@ This scrapes user's LI profile, adds it to the firestore database, and then retu
   - 404: Linkedin profile not found
   - 200: Returns full profile as json (view example response [here](https://github.com/jvandenaardweg/linkedin-profile-scraper#example-response))
 
-
 ## env file
 
 Twilio API needs a .env file with the following fields. These can be found in the Twilio console.
 Google firebase also needs a private key. You can follow the instructions [here](https://cloud.google.com/docs/authentication/production#create_service_account), and add the key path to your .env file.  
 Lastly, the LinkedIn Scraper needs a session cookie. You can get this by logging in to LinkedIn and getting the "li_at" cokkie value.
-
 
 ```env
 # Required for all uses
@@ -52,7 +54,7 @@ TWILIO_CHAT_SERVICE_SID=XX
 # Optional for Sync. By default, the app uses the 'default' instance on your account.
 # TWILIO_SYNC_SERVICE_SID=XX
 
-# Firebase Service Account 
+# Firebase Service Account
 # Download Private Key (.json file) and point to it here
 GOOGLE_APPLICATION_CREDENTIALS=.path/to/mixr-xxxxxxxxx.json
 
